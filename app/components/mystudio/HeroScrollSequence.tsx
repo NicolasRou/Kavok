@@ -27,7 +27,7 @@ export default function HeroScrollSequence({
 
   // Draw a specific frame on the canvas.
   // Mobile (<768px wide): cover — fills screen, mild crop on sides.
-  // Desktop: contain — full image visible, navy letterboxes on sides.
+  // Desktop: hybrid fit — at least 60% canvas width, crops top/bottom symmetrically.
   const drawFrame = useCallback((index: number) => {
     const canvas = canvasRef.current
     const img = framesRef.current[index]
@@ -55,23 +55,26 @@ export default function HeroScrollSequence({
       }
       ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch)
     } else {
-      // Contain: paint navy background then draw image centered
+      // Desktop: hybrid fit — no black pillars, controlled top/bottom crop.
+      //
+      // Two candidate scales:
+      //   sH  = fit by height (pure contain, zero crop, but tiny width on landscape monitors)
+      //   sW6 = scale needed to reach minimum 60 % of canvas width
+      //
+      // We pick the larger scale. On landscape desktops sW6 always wins,
+      // which fills ~60 % of the width and crops equal margins top & bottom.
+      // Canvas clips anything drawn outside its bounds automatically.
+      const sH  = ch / ih            // contain-by-height scale
+      const sW6 = (cw * 0.6) / iw   // min-60%-width scale
+      const s   = Math.max(sH, sW6)
+
+      const dw = iw * s
+      const dh = ih * s
+      const dx = (cw - dw) / 2   // centre horizontally (positive: pillarbox)
+      const dy = (ch - dh) / 2   // centre vertically   (negative: crop top/bottom)
+
       ctx.fillStyle = '#0d0f13'
       ctx.fillRect(0, 0, cw, ch)
-
-      let dw: number, dh: number
-      if (imgRatio < cvRatio) {
-        // Image more portrait than canvas → fit by height, pillarbox left/right
-        dh = ch
-        dw = ch * imgRatio
-      } else {
-        // Image wider than canvas → fit by width, letterbox top/bottom
-        dw = cw
-        dh = cw / imgRatio
-      }
-
-      const dx = (cw - dw) / 2
-      const dy = (ch - dh) / 2
       ctx.drawImage(img, 0, 0, iw, ih, dx, dy, dw, dh)
     }
   }, [])
