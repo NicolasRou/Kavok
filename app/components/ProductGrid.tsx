@@ -1,141 +1,455 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 
-export default function ProductGrid() {
+function useInView() {
   const ref = useRef<HTMLDivElement>(null)
   const [inView, setInView] = useState(false)
-
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true) },
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setInView(true) },
       { threshold: 0 }
     )
-    observer.observe(el)
-    return () => observer.disconnect()
+    obs.observe(el)
+    return () => obs.disconnect()
   }, [])
+  return { ref, inView }
+}
 
-  const cardBase =
-    'group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 transition-all duration-700'
+export default function ProductGrid() {
+  const ms = useInView()  // MyStudio   — desde izquierda
+  const ec = useInView()  // Ecommerce  — desde derecha
+  const wp = useInView()  // Web pages  — desde izquierda
 
   return (
-    <div ref={ref} className="grid gap-6 md:grid-cols-3">
+    <div className="flex flex-col gap-8">
 
-      {/* ── Mystudio ── */}
+      {/* ══════════════════════════════════════
+          CARD 1 — MyStudio  (texto izq | imgs der)
+          Entra desde la IZQUIERDA
+      ══════════════════════════════════════ */}
       <div
-        className={`${cardBase} hover:border-indigo-500/40 hover:shadow-[0_0_40px_-12px_rgba(99,102,241,0.15)] ${
-          inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+        ref={ms.ref}
+        className={`overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/40 transition-all duration-700 ease-out ${
+          ms.inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-16'
         }`}
-        style={{ transitionDelay: '0ms' }}
       >
-        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-indigo-600/10 blur-3xl transition-opacity duration-300 group-hover:opacity-100 opacity-0" />
+        <div className="grid lg:grid-cols-2">
 
-        <div className="relative z-10 flex flex-1 flex-col">
-          <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600/15 border border-indigo-500/20">
-            <svg className="h-6 w-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-            </svg>
+          {/* Texto */}
+          <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-14">
+            <span className="mb-5 inline-flex items-center gap-2 self-start rounded-full border border-indigo-500/25 bg-indigo-600/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-indigo-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-pulse" />
+              Producto Estrella
+            </span>
+
+            <h3 className="mb-3 text-2xl font-bold tracking-tight text-zinc-50 sm:text-3xl">
+              Mystudio
+            </h3>
+            <p className="mb-8 text-sm leading-relaxed text-zinc-400 sm:text-base">
+              La app de gestión integral para estudios de Pilates. Clases, alumnos, créditos y asistencia — todo en un solo lugar, desde el celular.
+            </p>
+
+            <ul className="mb-8 space-y-5">
+              <li className="flex items-start gap-3">
+                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-600/15">
+                  <svg className="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-100">Calendario de clases</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-zinc-500">
+                    Organizá clases por día, horario y profesor. Tus alumnos saben siempre cuándo y dónde es cada clase.
+                  </p>
+                </div>
+              </li>
+
+              <li className="flex items-start gap-3">
+                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-600/15">
+                  <svg className="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-100">Reagenda autónoma</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-zinc-500">
+                    Tus alumnos pueden cancelar y reagendar sus propias clases sin necesidad de contactarte. Menos mensajes, más autonomía.
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <a
+              href="/mystudio"
+              className="group/lnk self-start inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-400 transition-colors duration-200 hover:text-indigo-300"
+            >
+              Conocer más
+              <svg className="h-4 w-4 transition-transform duration-200 group-hover/lnk:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
           </div>
 
-          <span className="mb-3 inline-flex items-center gap-1.5 self-start rounded-full bg-indigo-600/15 px-3 py-1 text-xs font-semibold text-indigo-300 border border-indigo-500/20">
-            <span className="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-pulse" />
-            Producto Estrella
-          </span>
-
-          <h3 className="mt-3 text-xl font-bold text-zinc-50">Mystudio</h3>
-          <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
-            App de gestión integral para estudios de Pilates. Clases,
-            alumnos, créditos y asistencia — todo en un solo lugar,
-            desde el celular.
-          </p>
-
-          <a
-            href="/mystudio"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-400 transition-colors duration-200 hover:text-indigo-300"
+          {/* Screenshots — subiendo desde la base */}
+          <div
+            className="relative flex items-end justify-center gap-5 overflow-hidden px-8 pt-10 lg:px-10"
+            style={{ minHeight: '380px' }}
           >
-            Conocer más
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
+            {/* Glow de fondo */}
+            <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(99,102,241,0.12) 0%, transparent 70%)' }} />
+
+            <div
+              className="relative z-10 w-[46%] flex-none overflow-hidden rounded-t-2xl shadow-2xl"
+              style={{ border: '1px solid rgba(99,102,241,0.25)', borderBottom: 'none' }}
+            >
+              <Image
+                src="/assets/calendario_de_clases.png"
+                alt="Calendario de clases Mystudio"
+                width={260}
+                height={480}
+                className="w-full"
+              />
+            </div>
+
+            <div
+              className="relative z-10 w-[46%] flex-none overflow-hidden rounded-t-2xl shadow-2xl"
+              style={{ border: '1px solid rgba(99,102,241,0.25)', borderBottom: 'none', marginTop: '2rem' }}
+            >
+              <Image
+                src="/assets/reagenda_autonoma.png"
+                alt="Reagenda autónoma Mystudio"
+                width={260}
+                height={480}
+                className="w-full"
+              />
+            </div>
+          </div>
+
         </div>
       </div>
 
-      {/* ── Páginas Web Únicas ── */}
+      {/* ══════════════════════════════════════
+          CARD 2 — Kavok Ecommerce (imgs izq | texto der)
+          Entra desde la DERECHA
+      ══════════════════════════════════════ */}
       <div
-        className={`${cardBase} hover:border-violet-500/30 ${
-          inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+        ref={ec.ref}
+        className={`overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/40 transition-all duration-700 ease-out ${
+          ec.inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-16'
         }`}
-        style={{ transitionDelay: '120ms' }}
       >
-        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-violet-500/10 blur-3xl transition-opacity duration-300 group-hover:opacity-100 opacity-0" />
+        <div className="grid lg:grid-cols-2">
 
-        <div className="relative z-10 flex flex-1 flex-col">
-          <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/15 border border-violet-500/20">
-            <svg className="h-6 w-6 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12c0 .778.099 1.533.284 2.253" />
-            </svg>
+          {/* Screenshots — columna IZQUIERDA en desktop */}
+          <div className="flex flex-col gap-3 overflow-hidden p-6 lg:order-1 lg:p-10">
+            {/* Glow de fondo */}
+            <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse at 0% 50%, rgba(245,158,11,0.07) 0%, transparent 60%)' }} />
+
+            {/* Screenshot desktop (landscape) */}
+            <div
+              className="relative overflow-hidden rounded-2xl shadow-2xl"
+              style={{ border: '1px solid rgba(245,158,11,0.2)' }}
+            >
+              <Image
+                src="/assets/echz2.png"
+                alt="Tienda online Kavok Ecommerce"
+                width={600}
+                height={340}
+                className="w-full object-cover"
+              />
+            </div>
+
+            {/* Dos screenshots mobile */}
+            <div className="flex gap-3">
+              <div
+                className="relative w-1/2 overflow-hidden rounded-xl shadow-xl"
+                style={{ border: '1px solid rgba(245,158,11,0.15)', height: '110px' }}
+              >
+                <Image
+                  src="/assets/ecvc1.png"
+                  alt="Vista mobile Ecommerce"
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+              <div
+                className="relative w-1/2 overflow-hidden rounded-xl shadow-xl"
+                style={{ border: '1px solid rgba(245,158,11,0.15)', height: '110px' }}
+              >
+                <Image
+                  src="/assets/ecvc3.png"
+                  alt="Vista mobile Ecommerce"
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+            </div>
           </div>
 
-          <span className="mb-3 inline-flex items-center gap-1.5 self-start rounded-full bg-violet-500/10 px-3 py-1 text-xs font-semibold text-violet-300 border border-violet-500/20">
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
-            Software Factory
-          </span>
+          {/* Texto — columna DERECHA en desktop */}
+          <div className="flex flex-col justify-center p-8 sm:p-10 lg:order-2 lg:p-14">
+            <span className="mb-5 inline-flex items-center gap-2 self-start rounded-full border border-amber-500/25 bg-amber-600/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-amber-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+              E-commerce
+            </span>
 
-          <h3 className="mt-3 text-xl font-bold text-zinc-50">Creación y edición de páginas web únicas</h3>
-          <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
-            Páginas web de alto impacto con experiencias interactivas y
-            modelos 3D innovadores. Más allá del diseño estático: tu
-            marca cobra vida con animaciones, efectos visuales y
-            elementos tridimensionales que sorprenden desde el primer scroll.
-          </p>
+            <h3 className="mb-3 text-2xl font-bold tracking-tight text-zinc-50 sm:text-3xl">
+              Kavok Ecommerce
+            </h3>
+            <p className="mb-8 text-sm leading-relaxed text-zinc-400 sm:text-base">
+              Tiendas online con cobros por Mercado Pago, control de stock e inteligencia artificial. Sin conocimientos técnicos.
+            </p>
 
-          <a
-            href="#contacto"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-violet-400 transition-colors duration-200 hover:text-violet-300"
-          >
-            Conocer más
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
+            <ul className="mb-8 space-y-5">
+              <li className="flex items-start gap-3">
+                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/10">
+                  <svg className="h-4 w-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-100">Tienda online completa</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-zinc-500">
+                    Catálogo con variantes (talle, color, etc.), galería de fotos, ficha de producto, colecciones y categorías.
+                  </p>
+                </div>
+              </li>
+
+              <li className="flex items-start gap-3">
+                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/10">
+                  <svg className="h-4 w-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 14.25l6-6m4.5-3.493V21.75l-4.125-2.062-4.125 2.063-4.125-2.063L3 21.75V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185zM9.75 9h.008v.008H9.75V9zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 4.5h.008v.008h-.008V13.5zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-100">Cupones y descuentos</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-zinc-500">
+                    Creá cupones por porcentaje o monto fijo, con límite de usos, vencimiento y aplicación por producto o categoría.
+                  </p>
+                </div>
+              </li>
+
+              <li className="flex items-start gap-3">
+                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/10">
+                  <svg className="h-4 w-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-100">Sincronización con Mercado Libre</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-zinc-500">
+                    Importá todo tu catálogo de ML. El stock se sincroniza en tiempo real: una venta en ML descuenta en tu tienda.
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <a
+              href="/ecommerce"
+              className="group/lnk self-start inline-flex items-center gap-1.5 text-sm font-semibold text-amber-400 transition-colors duration-200 hover:text-amber-300"
+            >
+              Conocer más
+              <svg className="h-4 w-4 transition-transform duration-200 group-hover/lnk:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
+
         </div>
       </div>
 
-      {/* ── Kavok Ecommerce ── */}
+      {/* ══════════════════════════════════════
+          CARD 3 — Páginas Web  (texto izq | visual der)
+          Entra desde la IZQUIERDA
+      ══════════════════════════════════════ */}
       <div
-        className={`${cardBase} hover:border-amber-500/30 ${
-          inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+        ref={wp.ref}
+        className={`overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/40 transition-all duration-700 ease-out ${
+          wp.inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-16'
         }`}
-        style={{ transitionDelay: '240ms' }}
       >
-        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-amber-500/10 blur-3xl transition-opacity duration-300 group-hover:opacity-100 opacity-0" />
+        <div className="grid lg:grid-cols-2">
 
-        <div className="relative z-10 flex flex-1 flex-col">
-          <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/15 border border-amber-500/20">
-            <svg className="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-            </svg>
+          {/* Texto */}
+          <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-14">
+            <span className="mb-5 inline-flex items-center gap-2 self-start rounded-full border border-violet-500/25 bg-violet-600/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-violet-300">
+              Software Factory
+            </span>
+
+            <h3 className="mb-3 text-2xl font-bold tracking-tight text-zinc-50 sm:text-3xl">
+              Creación y edición de páginas web únicas
+            </h3>
+            <p className="mb-8 text-sm leading-relaxed text-zinc-400 sm:text-base">
+              Páginas web de alto impacto con experiencias interactivas y modelos 3D innovadores. Más allá del diseño estático: tu marca cobra vida desde el primer scroll.
+            </p>
+
+            <ul className="mb-8 space-y-5">
+              {[
+                {
+                  title: 'Modelos 3D integrados',
+                  desc: 'Elementos tridimensionales que sorprenden y diferencian tu marca del resto.',
+                  icon: (
+                    <svg className="h-4 w-4 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                    </svg>
+                  ),
+                },
+                {
+                  title: 'Animaciones e interactividad',
+                  desc: 'Efectos visuales personalizados, transiciones fluidas y microinteracciones que enganchan.',
+                  icon: (
+                    <svg className="h-4 w-4 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                    </svg>
+                  ),
+                },
+                {
+                  title: 'Diseño único a medida',
+                  desc: 'Sin templates genéricos. Cada página es diseñada y desarrollada para tu identidad de marca.',
+                  icon: (
+                    <svg className="h-4 w-4 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+                    </svg>
+                  ),
+                },
+              ].map((f, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-violet-500/20 bg-violet-600/10">
+                    {f.icon}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-zinc-100">{f.title}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-zinc-500">{f.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href="#contacto"
+              className="group/lnk self-start inline-flex items-center gap-1.5 text-sm font-semibold text-violet-400 transition-colors duration-200 hover:text-violet-300"
+            >
+              Conocer más
+              <svg className="h-4 w-4 transition-transform duration-200 group-hover/lnk:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
           </div>
 
-          <h3 className="mt-3 text-xl font-bold text-zinc-50">Kavok Ecommerce</h3>
-          <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
-            Tiendas online con cobros por Mercado Pago, control de stock,
-            sincronización con Mercado Libre e inteligencia artificial.
-            Sin conocimientos técnicos.
-          </p>
+          {/* Visual abstracto — mock browser con 3D */}
+          <div className="relative flex items-center justify-center overflow-hidden p-8 lg:p-12" style={{ minHeight: '340px' }}>
+            {/* Ambient glow */}
+            <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse at 60% 50%, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
 
-          <a
-            href="/ecommerce"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-400 transition-colors duration-200 hover:text-amber-300"
-          >
-            Conocer más
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
+            {/* Mock browser */}
+            <div
+              className="relative w-full max-w-xs overflow-hidden rounded-2xl shadow-2xl"
+              style={{ border: '1px solid rgba(139,92,246,0.25)', boxShadow: '0 8px 48px rgba(139,92,246,0.18)' }}
+            >
+              {/* Chrome bar */}
+              <div className="flex items-center gap-2.5 bg-zinc-800 px-4 py-3">
+                <div className="flex gap-1.5">
+                  <div className="h-2.5 w-2.5 rounded-full bg-zinc-600" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-zinc-600" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-zinc-600" />
+                </div>
+                <div className="flex-1 rounded-md bg-zinc-700/80 px-3 py-1 text-xs text-zinc-400">
+                  tu-marca.com
+                </div>
+              </div>
+
+              {/* Page content */}
+              <div
+                className="relative overflow-hidden"
+                style={{
+                  height: '260px',
+                  background: 'linear-gradient(135deg, #12082a 0%, #0b1527 50%, #0c1a10 100%)',
+                }}
+              >
+                {/* Grid perspectivo de fondo */}
+                <div
+                  className="absolute inset-0 opacity-[0.07]"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(rgba(139,92,246,1) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,1) 1px, transparent 1px)',
+                    backgroundSize: '28px 28px',
+                  }}
+                />
+
+                {/* Esfera principal */}
+                <div
+                  className="absolute"
+                  style={{
+                    top: '28px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '88px',
+                    height: '88px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle at 35% 32%, rgba(192,168,255,0.85), rgba(139,92,246,0.4) 50%, rgba(79,54,164,0.1) 80%, transparent)',
+                    boxShadow: '0 0 48px rgba(139,92,246,0.45), inset 0 1px 1px rgba(255,255,255,0.25)',
+                  }}
+                />
+
+                {/* Esfera secundaria */}
+                <div
+                  className="absolute"
+                  style={{
+                    top: '52px',
+                    right: '28px',
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle at 35% 32%, rgba(129,200,255,0.7), rgba(59,130,246,0.25) 60%, transparent)',
+                    boxShadow: '0 0 24px rgba(59,130,246,0.30)',
+                  }}
+                />
+
+                {/* Esfera terciaria */}
+                <div
+                  className="absolute"
+                  style={{
+                    top: '70px',
+                    left: '24px',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle at 35% 32%, rgba(250,168,210,0.6), rgba(236,72,153,0.15) 70%, transparent)',
+                    boxShadow: '0 0 16px rgba(236,72,153,0.2)',
+                  }}
+                />
+
+                {/* Anillo orbital */}
+                <div
+                  className="absolute"
+                  style={{
+                    top: '24px',
+                    left: '50%',
+                    transform: 'translateX(-50%) rotateX(70deg)',
+                    width: '120px',
+                    height: '120px',
+                    borderRadius: '50%',
+                    border: '1.5px solid rgba(139,92,246,0.35)',
+                  }}
+                />
+
+                {/* Texto mock — nombre de marca */}
+                <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2">
+                  <div className="h-2 w-28 rounded-full" style={{ background: 'rgba(255,255,255,0.18)' }} />
+                  <div className="h-1.5 w-16 rounded-full" style={{ background: 'rgba(255,255,255,0.09)' }} />
+                  <div
+                    className="mt-1 h-6 w-20 rounded-lg"
+                    style={{ background: 'rgba(139,92,246,0.35)', border: '1px solid rgba(139,92,246,0.5)' }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 

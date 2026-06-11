@@ -98,7 +98,7 @@ export default function Home() {
               Ecosistema SaaS
             </span>
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">
-              App de Agendas y Productos SaaS
+              Nuestras soluciones
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-zinc-400 leading-relaxed">
               Plataformas especializadas que resuelven problemas reales en
