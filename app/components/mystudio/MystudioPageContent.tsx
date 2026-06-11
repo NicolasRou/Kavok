@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import HeroSection from './HeroSection'
+import HeroScrollSequence from './HeroScrollSequence'
 import ProblemSection from './ProblemSection'
 import FeaturesSection from './FeaturesSection'
 import PricingSection from './PricingSection'
@@ -21,7 +21,7 @@ export default function MystudioPageContent({ fontFamily = 'serif' }: MystudioPa
 
   return (
     <main>
-      <HeroSection onOpenModal={openModal} fontFamily={fontFamily} />
+      <HeroScrollSequence fontFamily={fontFamily} />
       <ProblemSection fontFamily={fontFamily} />
       <FeaturesSection fontFamily={fontFamily} />
       <PricingSection onOpenModal={openModal} fontFamily={fontFamily} />
