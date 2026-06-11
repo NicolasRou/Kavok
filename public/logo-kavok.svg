@@ -1,0 +1,13 @@
+<svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Removed background rect for transparency -->
+  <g transform="translate(15, 10)">
+    <!-- Icon -->
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="24" width="22" height="5" rx="2.5" fill="#52525B"/>
+      <rect x="0" y="34" width="28" height="5" rx="2.5" fill="#52525B"/>
+      <rect x="12" y="14" width="28" height="5" rx="2.5" fill="#6366F1"/>
+    </svg>
+    <!-- Text -->
+    <text x="50" y="30" fill="#FAFAFA" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="28" letter-spacing="-0.02em">Kavok</text>
+  </g>
+</svg>

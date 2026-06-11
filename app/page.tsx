@@ -1,5 +1,7 @@
 import LogoKavok from "./components/LogoKavok";
 import ContactForm from "./components/ContactForm";
+import SolucionesDropdown from "./components/SolucionesDropdown";
+import ProductGrid from "./components/ProductGrid";
 
 export default function Home() {
   return (
@@ -11,12 +13,15 @@ export default function Home() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <LogoKavok />
 
-          <a
-            href="#contacto"
-            className="rounded-lg border border-zinc-700 bg-zinc-900 px-5 py-2 text-sm font-semibold text-zinc-300 transition-all duration-200 hover:border-indigo-500/50 hover:text-zinc-50 hover:shadow-[0_0_12px_-3px_rgba(99,102,241,0.3)]"
-          >
-            Contacto
-          </a>
+          <div className="flex items-center gap-2">
+            <SolucionesDropdown />
+            <a
+              href="#contacto"
+              className="rounded-lg border border-zinc-700 bg-zinc-900 px-5 py-2 text-sm font-semibold text-zinc-300 transition-all duration-200 hover:border-indigo-500/50 hover:text-zinc-50 hover:shadow-[0_0_12px_-3px_rgba(99,102,241,0.3)]"
+            >
+              Contacto
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -85,7 +90,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════
           ECOSISTEMA SAAS — Nuestros Productos
       ═══════════════════════════════════════════ */}
-      <section id="soluciones" className="relative py-28 px-6">
+      <section id="soluciones" className="relative overflow-x-hidden py-28 px-6">
         <div className="mx-auto max-w-6xl">
           {/* Section header */}
           <div className="text-center mb-16">
@@ -101,108 +106,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Product Grid — 3 cols */}
-          <div className="grid gap-6 md:grid-cols-3">
-            {/* ── CoreStudio ── */}
-            <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 transition-all duration-300 hover:border-indigo-500/40 hover:shadow-[0_0_40px_-12px_rgba(99,102,241,0.15)]">
-              <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-indigo-600/10 blur-3xl transition-opacity duration-300 group-hover:opacity-100 opacity-0" />
-
-              <div className="relative z-10 flex flex-1 flex-col">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600/15 border border-indigo-500/20">
-                  <svg className="h-6 w-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                  </svg>
-                </div>
-
-                <span className="mb-3 inline-flex items-center gap-1.5 self-start rounded-full bg-indigo-600/15 px-3 py-1 text-xs font-semibold text-indigo-300 border border-indigo-500/20">
-                  <span className="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-pulse" />
-                  Producto Estrella
-                </span>
-
-                <h3 className="mt-3 text-xl font-bold text-zinc-50">CoreStudio — App de Agendas para Pilates y Yoga</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
-                  Software integral de gestión para estudios de Pilates y Yoga.
-                  Agendamiento inteligente, control de alumnos, pagos y
-                  métricas de negocio — todo en una sola plataforma.
-                </p>
-
-                <a
-                  href="#"
-                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-400 transition-colors duration-200 hover:text-indigo-300"
-                >
-                  Conocer más
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            {/* ── Escáner Inteligente con IA ── */}
-            <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 transition-all duration-300 hover:border-cyan-500/30">
-              <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl transition-opacity duration-300 group-hover:opacity-100 opacity-0" />
-
-              <div className="relative z-10 flex flex-1 flex-col">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/15 border border-cyan-500/20">
-                  <svg className="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
-                  </svg>
-                </div>
-
-                <span className="mb-3 inline-flex items-center gap-1.5 self-start rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-semibold text-cyan-300 border border-cyan-500/20">
-                  Próximamente
-                </span>
-
-                <h3 className="mt-3 text-xl font-bold text-zinc-50">
-                  Escáner Inteligente con IA
-                </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
-                  Herramienta de visión artificial para digitalización y
-                  análisis automatizado de documentos e imágenes.
-                  Procesamiento en tiempo real potenciado por modelos de IA
-                  de última generación.
-                </p>
-
-                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  En desarrollo
-                </span>
-              </div>
-            </div>
-
-            {/* ── Agenda Pro ── */}
-            <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 transition-all duration-300 hover:border-amber-500/30">
-              <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-amber-500/10 blur-3xl transition-opacity duration-300 group-hover:opacity-100 opacity-0" />
-
-              <div className="relative z-10 flex flex-1 flex-col">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/15 border border-amber-500/20">
-                  <svg className="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-
-                <span className="mb-3 inline-flex items-center gap-1.5 self-start rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-300 border border-amber-500/20">
-                  Próximamente
-                </span>
-
-                <h3 className="mt-3 text-xl font-bold text-zinc-50">Agenda Pro</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
-                  Sistema de reservas ultra-rápido y sin fricción diseñado
-                  para negocios de alta rotación: barberías, centros de
-                  estética, estudios de tatuajes y servicios profesionales.
-                </p>
-
-                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  En desarrollo
-                </span>
-              </div>
-            </div>
-          </div>
+          <ProductGrid />
         </div>
       </section>
 

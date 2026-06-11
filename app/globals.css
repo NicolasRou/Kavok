@@ -7,9 +7,10 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* ── Smooth scroll ── */
+/* ── Smooth scroll + prevenir overflow horizontal ── */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -56,4 +57,43 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ── Mystudio: modal entrance ── */
+@keyframes ms-modal {
+  0% { opacity: 0; transform: scale(0.95) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.animate-ms-modal {
+  animation: ms-modal 0.2s ease-out both;
+}
+
+/* ── Mystudio: Pro plan border pulse ── */
+@keyframes ms-border-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(136, 164, 124, 0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(136, 164, 124, 0.08); }
+}
+
+.animate-ms-border-pulse {
+  animation: ms-border-pulse 2.5s ease-in-out infinite;
+}
+
+/* ── Ecommerce: modal entrance ── */
+@keyframes ke-modal {
+  0% { opacity: 0; transform: scale(0.95) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-ke-modal {
+  animation: ke-modal 0.2s ease-out both;
+}
+
+/* ── Ecommerce: WhatsApp button pulse ── */
+@keyframes ke-wa-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.45); }
+  70% { box-shadow: 0 0 0 12px rgba(37,211,102,0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+}
+.animate-ke-wa-pulse {
+  animation: ke-wa-pulse 2s ease-out infinite;
 }

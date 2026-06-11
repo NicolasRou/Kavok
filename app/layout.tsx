@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 
 /* ── SEO: Metadata global ── */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kavok.vercel.app"),
+  metadataBase: new URL("https://kavokuy.com"),
   title: "Kavok | Orquestamos Tecnología para Escalar tu Negocio en Uruguay",
   description:
     "Venture Studio & Software Factory en Montevideo. Expertos en desarrollo de software a medida, apps de agendas para pilates, barberías y sistemas inteligentes con IA.",
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     "software a medida",
     "Kavok",
   ],
-  authors: [{ name: "Kavok", url: "https://kavok.vercel.app" }],
+  authors: [{ name: "Kavok", url: "https://kavokuy.com" }],
   creator: "Kavok",
 
   /* ── OpenGraph ── */
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     title: "Kavok | Desarrollo de Software & Ecosistema de Apps",
     description:
       "Creamos soluciones como CoreStudio (Agendas para Pilates) y desarrollamos tu software a medida.",
-    url: "https://kavok.vercel.app",
+    url: "https://kavokuy.com",
     siteName: "Kavok",
     images: [
       {
@@ -64,8 +65,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": ["Organization", "ProfessionalService"],
   name: "Kavok",
-  url: "https://kavok.vercel.app",
-  logo: "https://kavok.vercel.app/og-image.png",
+  url: "https://kavokuy.com",
+  logo: "https://kavokuy.com/og-image.png",
   description:
     "Venture Studio & Software Factory en Montevideo, Uruguay. Desarrollo de software a medida, productos SaaS y soluciones con IA.",
   address: {
@@ -103,7 +104,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full bg-zinc-950 font-sans">{children}</body>
+      <body className="min-h-full bg-zinc-950 font-sans">
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }
