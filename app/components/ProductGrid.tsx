@@ -109,8 +109,10 @@ export default function ProductGrid() {
               <Image
                 src="/assets/calendario_de_clases.png"
                 alt="Calendario de clases Mystudio"
-                width={260}
-                height={480}
+                width={480}
+                height={960}
+                quality={90}
+                sizes="(max-width: 1023px) 44vw, 23vw"
                 className="w-full"
               />
             </div>
@@ -122,8 +124,10 @@ export default function ProductGrid() {
               <Image
                 src="/assets/reagenda_autonoma.png"
                 alt="Reagenda autónoma Mystudio"
-                width={260}
-                height={480}
+                width={480}
+                height={960}
+                quality={90}
+                sizes="(max-width: 1023px) 44vw, 23vw"
                 className="w-full"
               />
             </div>
@@ -157,9 +161,11 @@ export default function ProductGrid() {
               <Image
                 src="/assets/echz2.png"
                 alt="Tienda online Kavok Ecommerce"
-                width={600}
-                height={340}
-                className="w-full object-cover"
+                width={900}
+                height={510}
+                quality={90}
+                sizes="(max-width: 1023px) 90vw, 46vw"
+                className="w-full"
               />
             </div>
 
@@ -167,24 +173,28 @@ export default function ProductGrid() {
             <div className="flex gap-3">
               <div
                 className="relative w-1/2 overflow-hidden rounded-xl shadow-xl"
-                style={{ border: '1px solid rgba(245,158,11,0.15)', height: '110px' }}
+                style={{ border: '1px solid rgba(245,158,11,0.15)', height: '220px', backgroundColor: '#0d0e14' }}
               >
                 <Image
                   src="/assets/ecvc1.png"
                   alt="Vista mobile Ecommerce"
                   fill
-                  className="object-cover object-top"
+                  quality={90}
+                  sizes="(max-width: 1023px) 44vw, 23vw"
+                  className="object-contain"
                 />
               </div>
               <div
                 className="relative w-1/2 overflow-hidden rounded-xl shadow-xl"
-                style={{ border: '1px solid rgba(245,158,11,0.15)', height: '110px' }}
+                style={{ border: '1px solid rgba(245,158,11,0.15)', height: '220px', backgroundColor: '#0d0e14' }}
               >
                 <Image
                   src="/assets/ecvc3.png"
                   alt="Vista mobile Ecommerce"
                   fill
-                  className="object-cover object-top"
+                  quality={90}
+                  sizes="(max-width: 1023px) 44vw, 23vw"
+                  className="object-contain"
                 />
               </div>
             </div>
