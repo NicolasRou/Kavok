@@ -2,10 +2,13 @@ import LogoKavok from "./components/LogoKavok";
 import ContactForm from "./components/ContactForm";
 import SolucionesDropdown from "./components/SolucionesDropdown";
 import ProductGrid from "./components/ProductGrid";
+import BackgroundAnimationLoader from "./components/BackgroundAnimationLoader";
 
 export default function Home() {
   return (
     <>
+      <BackgroundAnimationLoader />
+
       {/* ═══════════════════════════════════════════
           NAVBAR — sticky, frosted glass
       ═══════════════════════════════════════════ */}
@@ -25,7 +28,7 @@ export default function Home() {
         </div>
       </nav>
 
-      <main>
+      <main className="relative z-10">
       {/* ═══════════════════════════════════════════
           HERO SECTION
       ═══════════════════════════════════════════ */}
