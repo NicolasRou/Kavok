@@ -23,9 +23,8 @@ export default function MystudioLayout({
 
   return (
     <div
-      className={`${playfair.variable} ${dmSans.variable} min-h-screen`}
+      className={`${playfair.variable} ${dmSans.variable} min-h-screen overflow-x-hidden`}
       style={{
-        overflowX: 'clip',
         backgroundColor: '#F9F7F2',
         fontFamily: `var(--font-dm-sans), system-ui, sans-serif`,
       }}
