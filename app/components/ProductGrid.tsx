@@ -1,8 +1,55 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Image from 'next/image'
 
+/* ── Lightbox ─────────────────────────────────────────── */
+function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [onClose])
+
+  return (
+    <div
+      className="fixed inset-0 z-200 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="relative max-h-[92vh] max-w-[92vw] overflow-hidden rounded-3xl shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          width={900}
+          height={1600}
+          quality={95}
+          className="max-h-[92vh] w-auto rounded-3xl object-contain"
+          priority
+        />
+        <button
+          onClick={onClose}
+          aria-label="Cerrar imagen"
+          className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+        >
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+/* ── InView hook ─────────────────────────────────────── */
 function useInView() {
   const ref = useRef<HTMLDivElement>(null)
   const [inView, setInView] = useState(false)
@@ -19,13 +66,24 @@ function useInView() {
   return { ref, inView }
 }
 
+/* ── ProductGrid ─────────────────────────────────────── */
 export default function ProductGrid() {
-  const ms = useInView()  // MyStudio   — desde izquierda
-  const ec = useInView()  // Ecommerce  — desde derecha
-  const wp = useInView()  // Web pages  — desde izquierda
+  const ms = useInView()
+  const ec = useInView()
+  const wp = useInView()
+
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
+  const [lightboxAlt, setLightboxAlt] = useState('')
+  const closeLight = useCallback(() => setLightboxSrc(null), [])
+
+  function openLight(src: string, alt: string) {
+    setLightboxSrc(src)
+    setLightboxAlt(alt)
+  }
 
   return (
     <div className="flex flex-col gap-8">
+      {lightboxSrc && <Lightbox src={lightboxSrc} alt={lightboxAlt} onClose={closeLight} />}
 
       {/* ══════════════════════════════════════
           CARD 1 — MyStudio  (texto izq | imgs der)
@@ -40,7 +98,7 @@ export default function ProductGrid() {
         <div className="grid lg:grid-cols-2">
 
           {/* Texto */}
-          <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-14">
+          <div className="flex flex-col justify-center px-8 pt-8 pb-0 sm:px-10 sm:pt-10 sm:pb-0 lg:p-14">
             <span className="mb-5 inline-flex items-center gap-2 self-start rounded-full border border-indigo-500/25 bg-indigo-600/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-indigo-300">
               <span className="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-pulse" />
               Producto Estrella
@@ -94,43 +152,71 @@ export default function ProductGrid() {
             </a>
           </div>
 
-          {/* Screenshots — subiendo desde la base */}
+          {/* Screenshots — dos phones solapados */}
           <div
-            className="relative flex items-end justify-center gap-5 overflow-hidden px-8 pt-10 lg:px-10"
-            style={{ minHeight: '380px' }}
+            className="relative flex items-end justify-center pt-6 pb-0 px-4 lg:px-6"
+            style={{ minHeight: '420px' }}
           >
             {/* Glow de fondo */}
-            <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(99,102,241,0.12) 0%, transparent 70%)' }} />
+            <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(99,102,241,0.14) 0%, transparent 70%)' }} />
 
-            <div
-              className="relative z-10 w-[46%] flex-none overflow-hidden rounded-t-2xl shadow-2xl"
-              style={{ border: '1px solid rgba(99,102,241,0.25)', borderBottom: 'none' }}
+            {/* Phone 1 — izquierda, ligeramente detrás */}
+            <button
+              onClick={() => openLight('/assets/calendario_de_clases.png', 'Calendario de clases Mystudio')}
+              className="group/img relative z-10 flex-none overflow-hidden rounded-t-2xl shadow-2xl transition-transform duration-300 hover:scale-[1.03]"
+              style={{
+                width: '52%',
+                marginRight: '-10%',
+                border: '1px solid rgba(99,102,241,0.30)',
+                borderBottom: 'none',
+              }}
             >
               <Image
                 src="/assets/calendario_de_clases.png"
                 alt="Calendario de clases Mystudio"
-                width={480}
-                height={960}
+                width={720}
+                height={1440}
                 quality={90}
-                sizes="(max-width: 1023px) 44vw, 23vw"
+                sizes="(max-width: 1023px) 50vw, 26vw"
                 className="w-full"
               />
-            </div>
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-200 bg-black/20">
+                <div className="rounded-full bg-black/50 p-2 backdrop-blur-sm">
+                  <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
+                  </svg>
+                </div>
+              </div>
+            </button>
 
-            <div
-              className="relative z-10 w-[46%] flex-none overflow-hidden rounded-t-2xl shadow-2xl"
-              style={{ border: '1px solid rgba(99,102,241,0.25)', borderBottom: 'none', marginTop: '2rem' }}
+            {/* Phone 2 — derecha, más al frente, desplazado abajo */}
+            <button
+              onClick={() => openLight('/assets/reagenda_autonoma.png', 'Reagenda autónoma Mystudio')}
+              className="group/img relative z-20 flex-none overflow-hidden rounded-t-2xl shadow-2xl transition-transform duration-300 hover:scale-[1.03]"
+              style={{
+                width: '52%',
+                marginBottom: '1.5rem',
+                border: '1px solid rgba(99,102,241,0.30)',
+                borderBottom: 'none',
+              }}
             >
               <Image
                 src="/assets/reagenda_autonoma.png"
                 alt="Reagenda autónoma Mystudio"
-                width={480}
-                height={960}
+                width={720}
+                height={1440}
                 quality={90}
-                sizes="(max-width: 1023px) 44vw, 23vw"
+                sizes="(max-width: 1023px) 50vw, 26vw"
                 className="w-full"
               />
-            </div>
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-200 bg-black/20">
+                <div className="rounded-full bg-black/50 p-2 backdrop-blur-sm">
+                  <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
+                  </svg>
+                </div>
+              </div>
+            </button>
           </div>
 
         </div>
@@ -153,9 +239,10 @@ export default function ProductGrid() {
             {/* Glow de fondo */}
             <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse at 0% 50%, rgba(245,158,11,0.07) 0%, transparent 60%)' }} />
 
-            {/* Screenshot desktop (landscape) */}
-            <div
-              className="relative overflow-hidden rounded-2xl shadow-2xl"
+            {/* Screenshot desktop */}
+            <button
+              onClick={() => openLight('/assets/echz2.png', 'Tienda online Kavok Ecommerce')}
+              className="group/img relative overflow-hidden rounded-2xl shadow-2xl transition-transform duration-300 hover:scale-[1.02]"
               style={{ border: '1px solid rgba(245,158,11,0.2)' }}
             >
               <Image
@@ -167,12 +254,20 @@ export default function ProductGrid() {
                 sizes="(max-width: 1023px) 90vw, 46vw"
                 className="w-full"
               />
-            </div>
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-200 bg-black/20">
+                <div className="rounded-full bg-black/50 p-2 backdrop-blur-sm">
+                  <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
+                  </svg>
+                </div>
+              </div>
+            </button>
 
             {/* Dos screenshots mobile */}
             <div className="flex gap-3">
-              <div
-                className="relative w-1/2 overflow-hidden rounded-xl shadow-xl"
+              <button
+                onClick={() => openLight('/assets/ecvc1.png', 'Vista mobile Ecommerce')}
+                className="group/img relative w-1/2 overflow-hidden rounded-xl shadow-xl transition-transform duration-300 hover:scale-[1.02]"
                 style={{ border: '1px solid rgba(245,158,11,0.15)', height: '220px', backgroundColor: '#0d0e14' }}
               >
                 <Image
@@ -183,9 +278,17 @@ export default function ProductGrid() {
                   sizes="(max-width: 1023px) 44vw, 23vw"
                   className="object-contain"
                 />
-              </div>
-              <div
-                className="relative w-1/2 overflow-hidden rounded-xl shadow-xl"
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-200 bg-black/20">
+                  <div className="rounded-full bg-black/50 p-2 backdrop-blur-sm">
+                    <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
+                    </svg>
+                  </div>
+                </div>
+              </button>
+              <button
+                onClick={() => openLight('/assets/ecvc3.png', 'Vista mobile Ecommerce')}
+                className="group/img relative w-1/2 overflow-hidden rounded-xl shadow-xl transition-transform duration-300 hover:scale-[1.02]"
                 style={{ border: '1px solid rgba(245,158,11,0.15)', height: '220px', backgroundColor: '#0d0e14' }}
               >
                 <Image
@@ -196,7 +299,14 @@ export default function ProductGrid() {
                   sizes="(max-width: 1023px) 44vw, 23vw"
                   className="object-contain"
                 />
-              </div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-200 bg-black/20">
+                  <div className="rounded-full bg-black/50 p-2 backdrop-blur-sm">
+                    <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
+                    </svg>
+                  </div>
+                </div>
+              </button>
             </div>
           </div>
 
@@ -352,15 +462,12 @@ export default function ProductGrid() {
 
           {/* Visual abstracto — mock browser con 3D */}
           <div className="relative flex items-center justify-center overflow-hidden p-8 lg:p-12" style={{ minHeight: '340px' }}>
-            {/* Ambient glow */}
             <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse at 60% 50%, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
 
-            {/* Mock browser */}
             <div
               className="relative w-full max-w-xs overflow-hidden rounded-2xl shadow-2xl"
               style={{ border: '1px solid rgba(139,92,246,0.25)', boxShadow: '0 8px 48px rgba(139,92,246,0.18)' }}
             >
-              {/* Chrome bar */}
               <div className="flex items-center gap-2.5 bg-zinc-800 px-4 py-3">
                 <div className="flex gap-1.5">
                   <div className="h-2.5 w-2.5 rounded-full bg-zinc-600" />
@@ -372,7 +479,6 @@ export default function ProductGrid() {
                 </div>
               </div>
 
-              {/* Page content */}
               <div
                 className="relative overflow-hidden"
                 style={{
@@ -380,7 +486,6 @@ export default function ProductGrid() {
                   background: 'linear-gradient(135deg, #12082a 0%, #0b1527 50%, #0c1a10 100%)',
                 }}
               >
-                {/* Grid perspectivo de fondo */}
                 <div
                   className="absolute inset-0 opacity-[0.07]"
                   style={{
@@ -389,72 +494,14 @@ export default function ProductGrid() {
                     backgroundSize: '28px 28px',
                   }}
                 />
-
-                {/* Esfera principal */}
-                <div
-                  className="absolute"
-                  style={{
-                    top: '28px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '88px',
-                    height: '88px',
-                    borderRadius: '50%',
-                    background: 'radial-gradient(circle at 35% 32%, rgba(192,168,255,0.85), rgba(139,92,246,0.4) 50%, rgba(79,54,164,0.1) 80%, transparent)',
-                    boxShadow: '0 0 48px rgba(139,92,246,0.45), inset 0 1px 1px rgba(255,255,255,0.25)',
-                  }}
-                />
-
-                {/* Esfera secundaria */}
-                <div
-                  className="absolute"
-                  style={{
-                    top: '52px',
-                    right: '28px',
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '50%',
-                    background: 'radial-gradient(circle at 35% 32%, rgba(129,200,255,0.7), rgba(59,130,246,0.25) 60%, transparent)',
-                    boxShadow: '0 0 24px rgba(59,130,246,0.30)',
-                  }}
-                />
-
-                {/* Esfera terciaria */}
-                <div
-                  className="absolute"
-                  style={{
-                    top: '70px',
-                    left: '24px',
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    background: 'radial-gradient(circle at 35% 32%, rgba(250,168,210,0.6), rgba(236,72,153,0.15) 70%, transparent)',
-                    boxShadow: '0 0 16px rgba(236,72,153,0.2)',
-                  }}
-                />
-
-                {/* Anillo orbital */}
-                <div
-                  className="absolute"
-                  style={{
-                    top: '24px',
-                    left: '50%',
-                    transform: 'translateX(-50%) rotateX(70deg)',
-                    width: '120px',
-                    height: '120px',
-                    borderRadius: '50%',
-                    border: '1.5px solid rgba(139,92,246,0.35)',
-                  }}
-                />
-
-                {/* Texto mock — nombre de marca */}
+                <div className="absolute" style={{ top: '28px', left: '50%', transform: 'translateX(-50%)', width: '88px', height: '88px', borderRadius: '50%', background: 'radial-gradient(circle at 35% 32%, rgba(192,168,255,0.85), rgba(139,92,246,0.4) 50%, rgba(79,54,164,0.1) 80%, transparent)', boxShadow: '0 0 48px rgba(139,92,246,0.45), inset 0 1px 1px rgba(255,255,255,0.25)' }} />
+                <div className="absolute" style={{ top: '52px', right: '28px', width: '44px', height: '44px', borderRadius: '50%', background: 'radial-gradient(circle at 35% 32%, rgba(129,200,255,0.7), rgba(59,130,246,0.25) 60%, transparent)', boxShadow: '0 0 24px rgba(59,130,246,0.30)' }} />
+                <div className="absolute" style={{ top: '70px', left: '24px', width: '32px', height: '32px', borderRadius: '50%', background: 'radial-gradient(circle at 35% 32%, rgba(250,168,210,0.6), rgba(236,72,153,0.15) 70%, transparent)', boxShadow: '0 0 16px rgba(236,72,153,0.2)' }} />
+                <div className="absolute" style={{ top: '24px', left: '50%', transform: 'translateX(-50%) rotateX(70deg)', width: '120px', height: '120px', borderRadius: '50%', border: '1.5px solid rgba(139,92,246,0.35)' }} />
                 <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2">
                   <div className="h-2 w-28 rounded-full" style={{ background: 'rgba(255,255,255,0.18)' }} />
                   <div className="h-1.5 w-16 rounded-full" style={{ background: 'rgba(255,255,255,0.09)' }} />
-                  <div
-                    className="mt-1 h-6 w-20 rounded-lg"
-                    style={{ background: 'rgba(139,92,246,0.35)', border: '1px solid rgba(139,92,246,0.5)' }}
-                  />
+                  <div className="mt-1 h-6 w-20 rounded-lg" style={{ background: 'rgba(139,92,246,0.35)', border: '1px solid rgba(139,92,246,0.5)' }} />
                 </div>
               </div>
             </div>
