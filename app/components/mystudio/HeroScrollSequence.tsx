@@ -25,7 +25,9 @@ export default function HeroScrollSequence({
   const [hasFailed, setHasFailed] = useState(false)
   const allLoaded = loadedCount === TOTAL_FRAMES
 
-  // Draw a specific frame on the canvas using object-fit:cover behavior
+  // Draw a specific frame on the canvas.
+  // Mobile (<768px wide): cover — fills screen, mild crop on sides.
+  // Desktop: contain — full image visible, navy letterboxes on sides.
   const drawFrame = useCallback((index: number) => {
     const canvas = canvasRef.current
     const img = framesRef.current[index]
@@ -39,19 +41,39 @@ export default function HeroScrollSequence({
     const ih = img.naturalHeight
     const imgRatio = iw / ih
     const cvRatio = cw / ch
+    const isMobile = cw < 768
 
-    let sx = 0, sy = 0, sw = iw, sh = ih
-    if (imgRatio > cvRatio) {
-      // Image is wider: crop sides
-      sw = ih * cvRatio
-      sx = (iw - sw) / 2
+    if (isMobile) {
+      // Cover: fill canvas, crop a small amount from the sides
+      let sx = 0, sy = 0, sw = iw, sh = ih
+      if (imgRatio > cvRatio) {
+        sw = ih * cvRatio
+        sx = (iw - sw) / 2
+      } else {
+        sh = iw / cvRatio
+        sy = (ih - sh) / 2
+      }
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch)
     } else {
-      // Image is taller: crop top/bottom
-      sh = iw / cvRatio
-      sy = (ih - sh) / 2
-    }
+      // Contain: paint navy background then draw image centered
+      ctx.fillStyle = '#0d0f13'
+      ctx.fillRect(0, 0, cw, ch)
 
-    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch)
+      let dw: number, dh: number
+      if (imgRatio < cvRatio) {
+        // Image more portrait than canvas → fit by height, pillarbox left/right
+        dh = ch
+        dw = ch * imgRatio
+      } else {
+        // Image wider than canvas → fit by width, letterbox top/bottom
+        dw = cw
+        dh = cw / imgRatio
+      }
+
+      const dx = (cw - dw) / 2
+      const dy = (ch - dh) / 2
+      ctx.drawImage(img, 0, 0, iw, ih, dx, dy, dw, dh)
+    }
   }, [])
 
   // Preload all frames
@@ -158,7 +180,7 @@ export default function HeroScrollSequence({
   )}`
 
   return (
-    <div ref={sectionRef} style={{ height: '300vh', position: 'relative' }}>
+    <div ref={sectionRef} style={{ height: '150vh', position: 'relative' }}>
       {/* ── Sticky viewport ── stays pinned to top while scrolling through 300vh */}
       <div
         style={{
