@@ -154,8 +154,8 @@ export default function ProductGrid() {
 
           {/* Screenshots — dos phones solapados */}
           <div
-            className="relative flex items-end justify-center pt-6 pb-0 px-4 lg:px-6"
-            style={{ minHeight: '420px' }}
+            className="relative flex items-end justify-center pt-0 pb-0 px-4 lg:px-6 lg:pt-6"
+            style={{ minHeight: '330px' }}
           >
             {/* Glow de fondo */}
             <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(99,102,241,0.14) 0%, transparent 70%)' }} />

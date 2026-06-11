@@ -4,16 +4,16 @@ import { useEffect, useRef } from 'react'
 
 /* ── Static data ──────────────────────────────────────── */
 const ITEMS = [
-  { t: "const studio = await kavok.create()", x: 4,  y: 12, f: 0.12, sz: 11, op: 0.17 },
-  { t: "export default function Dashboard()",  x: 60, y: 33, f: 0.23, sz: 11, op: 0.15 },
-  { t: "<MyStudio plan='pro' />",              x: 7,  y: 62, f: 0.09, sz: 12, op: 0.18 },
-  { t: "type Lead = { name: string }",          x: 68, y: 70, f: 0.29, sz: 11, op: 0.15 },
-  { t: "import { ai } from '@kavok/core'",      x: 28, y: 87, f: 0.18, sz: 11, op: 0.17 },
-  { t: "{  }",                                  x: 2,  y: 42, f: 0.11, sz: 36, op: 0.11 },
-  { t: "</>",                                   x: 84, y: 20, f: 0.34, sz: 30, op: 0.12 },
-  { t: "=>",                                    x: 52, y: 8,  f: 0.17, sz: 28, op: 0.11 },
-  { t: "( )",                                   x: 20, y: 80, f: 0.21, sz: 26, op: 0.11 },
-  { t: "{ }",                                   x: 78, y: 55, f: 0.15, sz: 32, op: 0.10 },
+  { t: "const studio = await kavok.create()", x: 4,  y: 12, f: 0.12, sz: 11, op: 0.13 },
+  { t: "export default function Dashboard()",  x: 60, y: 33, f: 0.23, sz: 11, op: 0.11 },
+  { t: "<MyStudio plan='pro' />",              x: 7,  y: 62, f: 0.09, sz: 12, op: 0.14 },
+  { t: "type Lead = { name: string }",          x: 68, y: 70, f: 0.29, sz: 11, op: 0.11 },
+  { t: "import { ai } from '@kavok/core'",      x: 28, y: 87, f: 0.18, sz: 11, op: 0.13 },
+  { t: "{  }",                                  x: 2,  y: 42, f: 0.11, sz: 36, op: 0.08 },
+  { t: "</>",                                   x: 84, y: 20, f: 0.34, sz: 30, op: 0.09 },
+  { t: "=>",                                    x: 52, y: 8,  f: 0.17, sz: 28, op: 0.08 },
+  { t: "( )",                                   x: 20, y: 80, f: 0.21, sz: 26, op: 0.08 },
+  { t: "{ }",                                   x: 78, y: 55, f: 0.15, sz: 32, op: 0.08 },
 ]
 
 interface Pt {
@@ -50,7 +50,7 @@ export default function BackgroundAnimation() {
       vx: (Math.random() - 0.5) * 0.25,
       vy: (Math.random() - 0.5) * 0.25,
       r: 0.8 + Math.random() * 1.8,
-      op: 0.12 + Math.random() * 0.35,
+      op: 0.09 + Math.random() * 0.30,
       ind: Math.random() < 0.3,
     }))
 
@@ -186,7 +186,7 @@ export default function BackgroundAnimation() {
         {/* Container sized proportionally to SVG viewBox 40×40 */}
         <div
           className="relative w-[280px] h-[280px] md:w-[560px] md:h-[560px]"
-          style={{ opacity: 0.20 }}
+          style={{ opacity: 0.17 }}
         >
           {/* Indigo bar — SVG: x=12, y=14, w=28, h=5  (30% / 35% / 70% / 12.5%) */}
           <div
