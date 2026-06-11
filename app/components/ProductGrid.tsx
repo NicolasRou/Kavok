@@ -154,8 +154,7 @@ export default function ProductGrid() {
 
           {/* Screenshots — dos phones solapados */}
           <div
-            className="relative flex items-end justify-center pt-0 pb-0 px-4 lg:px-6 lg:pt-6"
-            style={{ minHeight: '330px' }}
+            className="relative flex items-start lg:items-end justify-center pt-0 pb-0 px-4 lg:px-6 lg:pt-6 lg:min-h-82.5"
           >
             {/* Glow de fondo */}
             <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(99,102,241,0.14) 0%, transparent 70%)' }} />
@@ -192,10 +191,9 @@ export default function ProductGrid() {
             {/* Phone 2 — derecha, más al frente, desplazado abajo */}
             <button
               onClick={() => openLight('/assets/reagenda_autonoma.png', 'Reagenda autónoma Mystudio')}
-              className="group/img relative z-20 flex-none overflow-hidden rounded-t-2xl shadow-2xl transition-transform duration-300 hover:scale-[1.03]"
+              className="group/img relative z-20 flex-none overflow-hidden rounded-t-2xl shadow-2xl transition-transform duration-300 hover:scale-[1.03] mt-6 lg:mt-0 lg:mb-6"
               style={{
                 width: '52%',
-                marginBottom: '1.5rem',
                 border: '1px solid rgba(99,102,241,0.30)',
                 borderBottom: 'none',
               }}

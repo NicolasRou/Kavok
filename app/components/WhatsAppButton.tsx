@@ -11,7 +11,7 @@ const MESSAGES: Record<string, string> = {
     'Hola! Te quiero consultar por Kavok Ecommerce...',
 }
 
-const DEFAULT_MESSAGE = 'Hola! Me comunico desde kavokuy.com...'
+const DEFAULT_MESSAGE = 'Hola! Te quiero hacer una consulta...'
 
 export default function WhatsAppButton() {
   const pathname = usePathname()
