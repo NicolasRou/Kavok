@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import WhatsAppButton from "./components/WhatsAppButton";
 
@@ -254,6 +255,7 @@ export default function RootLayout({
         {children}
         <WhatsAppButton />
       </body>
+      <GoogleAnalytics gaId="G-SH4SZ2CYT1" />
     </html>
   );
 }
