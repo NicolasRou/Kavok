@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 
 const BackgroundAnimation = dynamic(
   () => import('./BackgroundAnimation'),
-  { ssr: false }
+  { ssr: false, loading: () => null }
 )
 
 export default function BackgroundAnimationLoader() {

@@ -70,7 +70,7 @@ export default function PricingSection({ onOpenModal, fontFamily = 'serif' }: Pr
   }, [])
 
   return (
-    <section id="planes" ref={ref} className="px-6 py-24" style={{ backgroundColor: '#EDEAE3' }}>
+    <section id="planes" ref={ref} className="scroll-mt-20 px-6 py-24" style={{ backgroundColor: '#EDEAE3' }}>
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div

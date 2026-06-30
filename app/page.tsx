@@ -4,9 +4,69 @@ import SolucionesDropdown from "./components/SolucionesDropdown";
 import ProductGrid from "./components/ProductGrid";
 import BackgroundAnimationLoader from "./components/BackgroundAnimationLoader";
 
+const homeFaqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://kavokuy.com/#faq",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "¿Qué es Kavok?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Kavok es un Venture Studio y Software Factory fundado en Montevideo, Uruguay. Desarrollamos productos SaaS propios —Mystudio para estudios de Pilates y Kavok Ecommerce para tiendas online— y ofrecemos servicios de desarrollo de software a medida y automatización con inteligencia artificial para empresas de toda América Latina.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿Qué productos SaaS ofrece Kavok?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Kavok tiene dos productos SaaS propios: Mystudio, una app de gestión integral para estudios de Pilates (planes desde $35/mes), y Kavok Ecommerce, una plataforma de tienda online con integración de Mercado Pago, Mercado Libre e inteligencia artificial (mantenimiento desde $49/mes).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿Kavok hace desarrollo de software a medida?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sí. Además de sus productos propios, Kavok desarrolla software a medida: aplicaciones web complejas, sistemas de gestión logística, e-commerces con personalizadores en tiempo real y soluciones de automatización con inteligencia artificial para empresas de la región.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿Dónde está ubicado Kavok y a qué países sirve?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Kavok está ubicado en Montevideo, Uruguay. Desde allí brinda servicios a clientes en Uruguay, Argentina, Brasil, Paraguay y Chile, con atención directa en español y en el huso horario de América del Sur.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿Cómo contactar a Kavok?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Podés contactar a Kavok por WhatsApp al +598 99 313 544, por email a nicolasheredia02@gmail.com, o completando el formulario de contacto en kavokuy.com. El equipo responde desde Montevideo, Uruguay.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿Qué diferencia a Kavok de otras empresas de software en Uruguay?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Kavok combina el modelo de Venture Studio (con productos SaaS propios y probados) con una Software Factory de desarrollo a medida. Esto significa que los clientes trabajan con un equipo que ya construyó y opera sus propios productos en producción, lo que garantiza experiencia real en arquitectura cloud, IA y escalabilidad.",
+      },
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqLd) }}
+      />
       <BackgroundAnimationLoader />
 
       {/* ═══════════════════════════════════════════
@@ -38,13 +98,7 @@ export default function Home() {
         <div className="pointer-events-none absolute -bottom-40 right-1/4 h-[300px] w-[400px] rounded-full bg-cyan-500/8 blur-[100px] animate-glow-pulse animation-delay-500" />
 
         <div className="relative z-10 mx-auto max-w-3xl">
-          {/* Badge */}
-          <div className="animate-fade-in-up mb-8 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/60 px-4 py-1.5 text-xs font-medium text-zinc-400">
-            <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
-            Venture Studio &amp; Software Factory — Uruguay
-          </div>
-
-          {/* Heading */}
+            {/* Heading */}
           <h1 className="animate-fade-in-up animation-delay-100 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
             <span className="text-zinc-50">Orquestamos tecnología</span>
             <br />
@@ -376,7 +430,7 @@ export default function Home() {
               &copy; {new Date().getFullYear()} Kavok. Todos los derechos reservados.
             </p>
             <p className="text-xs text-zinc-700">
-              Diseñado y desarrollado en 🇺🇦 Uruguay
+              Diseñado y desarrollado en Uruguay
             </p>
           </div>
         </div>
