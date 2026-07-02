@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: 'Mystudio — App de gestión para estudios de Pilates',
     description:
       'Clases, alumnos, créditos y asistencia en un solo lugar. Reagenda autónoma desde el celular. Probalo gratis 15 días, sin tarjeta.',
-    url: 'https://kavokuy.com/mystudio',
+    url: 'https://www.kavokuy.com/mystudio',
     siteName: 'Kavok',
     /* La imagen la genera /app/mystudio/opengraph-image.tsx automáticamente */
     locale: 'es_UY',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: 'https://kavokuy.com/mystudio',
+    canonical: 'https://www.kavokuy.com/mystudio',
   },
 
   robots: {
@@ -56,7 +56,7 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'SoftwareApplication',
-      '@id': 'https://kavokuy.com/mystudio#app',
+      '@id': 'https://www.kavokuy.com/mystudio#app',
       name: 'Mystudio',
       alternateName: 'Mystudio by Kavok',
       applicationCategory: 'BusinessApplication',
@@ -99,20 +99,20 @@ const jsonLd = {
         },
       ],
       provider: {
-        '@id': 'https://kavokuy.com/#organization',
+        '@id': 'https://www.kavokuy.com/#organization',
       },
       inLanguage: 'es',
       availableOnDevice: ['Desktop', 'Mobile', 'Tablet'],
     },
     {
       '@type': 'WebPage',
-      '@id': 'https://kavokuy.com/mystudio#webpage',
-      url: 'https://kavokuy.com/mystudio',
+      '@id': 'https://www.kavokuy.com/mystudio#webpage',
+      url: 'https://www.kavokuy.com/mystudio',
       name: 'Mystudio — Gestión para estudios de Pilates | Kavok',
       description:
         'Mystudio es la app de gestión integral para estudios de Pilates. Controlá clases, alumnos, créditos y asistencia desde un solo lugar. 15 días gratis, sin tarjeta.',
-      isPartOf: { '@id': 'https://kavokuy.com/#website' },
-      about: { '@id': 'https://kavokuy.com/mystudio#app' },
+      isPartOf: { '@id': 'https://www.kavokuy.com/#website' },
+      about: { '@id': 'https://www.kavokuy.com/mystudio#app' },
       inLanguage: 'es-UY',
       mentions: [
         { '@type': 'Thing', name: 'Pilates' },
@@ -124,25 +124,25 @@ const jsonLd = {
     },
     {
       '@type': 'BreadcrumbList',
-      '@id': 'https://kavokuy.com/mystudio#breadcrumb',
+      '@id': 'https://www.kavokuy.com/mystudio#breadcrumb',
       itemListElement: [
         {
           '@type': 'ListItem',
           position: 1,
           name: 'Inicio',
-          item: 'https://kavokuy.com',
+          item: 'https://www.kavokuy.com',
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'Mystudio — Gestión para estudios de Pilates',
-          item: 'https://kavokuy.com/mystudio',
+          item: 'https://www.kavokuy.com/mystudio',
         },
       ],
     },
     {
       '@type': 'FAQPage',
-      '@id': 'https://kavokuy.com/mystudio#faq',
+      '@id': 'https://www.kavokuy.com/mystudio#faq',
       mainEntity: [
         {
           '@type': 'Question',

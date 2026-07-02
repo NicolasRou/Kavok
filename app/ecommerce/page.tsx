@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: 'Kavok Ecommerce — Tienda online con IA y Mercado Pago',
     description:
       'Vendé online con Mercado Pago, sincronizá con Mercado Libre e IA para imágenes de producto. Sin pago inicial, sin comisiones por venta.',
-    url: 'https://kavokuy.com/ecommerce',
+    url: 'https://www.kavokuy.com/ecommerce',
     siteName: 'Kavok',
     /* La imagen la genera /app/ecommerce/opengraph-image.tsx automáticamente */
     locale: 'es_UY',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: 'https://kavokuy.com/ecommerce',
+    canonical: 'https://www.kavokuy.com/ecommerce',
   },
 
   robots: {
@@ -58,7 +58,7 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'SoftwareApplication',
-      '@id': 'https://kavokuy.com/ecommerce#app',
+      '@id': 'https://www.kavokuy.com/ecommerce#app',
       name: 'Kavok Ecommerce',
       alternateName: 'Kavok Ecommerce — Tienda Online con IA',
       applicationCategory: 'BusinessApplication',
@@ -117,20 +117,20 @@ const jsonLd = {
         },
       ],
       provider: {
-        '@id': 'https://kavokuy.com/#organization',
+        '@id': 'https://www.kavokuy.com/#organization',
       },
       inLanguage: 'es',
       availableOnDevice: ['Desktop', 'Mobile', 'Tablet'],
     },
     {
       '@type': 'WebPage',
-      '@id': 'https://kavokuy.com/ecommerce#webpage',
-      url: 'https://kavokuy.com/ecommerce',
+      '@id': 'https://www.kavokuy.com/ecommerce#webpage',
+      url: 'https://www.kavokuy.com/ecommerce',
       name: 'Kavok Ecommerce — Tu tienda online profesional con IA | Kavok',
       description:
         'Kavok Ecommerce: tienda online completa con cobros por Mercado Pago, integración Mercado Libre, IA para imágenes y reportes. Desde U$S 93/mes todo incluido, sin pago inicial.',
-      isPartOf: { '@id': 'https://kavokuy.com/#website' },
-      about: { '@id': 'https://kavokuy.com/ecommerce#app' },
+      isPartOf: { '@id': 'https://www.kavokuy.com/#website' },
+      about: { '@id': 'https://www.kavokuy.com/ecommerce#app' },
       inLanguage: 'es-UY',
       mentions: [
         { '@type': 'Thing', name: 'Mercado Pago' },
@@ -143,25 +143,25 @@ const jsonLd = {
     },
     {
       '@type': 'BreadcrumbList',
-      '@id': 'https://kavokuy.com/ecommerce#breadcrumb',
+      '@id': 'https://www.kavokuy.com/ecommerce#breadcrumb',
       itemListElement: [
         {
           '@type': 'ListItem',
           position: 1,
           name: 'Inicio',
-          item: 'https://kavokuy.com',
+          item: 'https://www.kavokuy.com',
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'Kavok Ecommerce — Tu tienda online con IA',
-          item: 'https://kavokuy.com/ecommerce',
+          item: 'https://www.kavokuy.com/ecommerce',
         },
       ],
     },
     {
       '@type': 'FAQPage',
-      '@id': 'https://kavokuy.com/ecommerce#faq',
+      '@id': 'https://www.kavokuy.com/ecommerce#faq',
       mainEntity: [
         {
           '@type': 'Question',

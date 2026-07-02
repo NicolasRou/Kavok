@@ -7,7 +7,7 @@ import BackgroundAnimationLoader from "./components/BackgroundAnimationLoader";
 const homeFaqLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://kavokuy.com/#faq",
+  "@id": "https://www.kavokuy.com/#faq",
   mainEntity: [
     {
       "@type": "Question",

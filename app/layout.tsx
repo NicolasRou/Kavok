@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 /* ── SEO: Metadata global ── */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kavokuy.com"),
+  metadataBase: new URL("https://www.kavokuy.com"),
 
   /* Subpáginas heredan el template: "Título Página | Kavok" */
   title: {
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     "venture studio Uruguay",
   ],
 
-  authors: [{ name: "Kavok", url: "https://kavokuy.com" }],
+  authors: [{ name: "Kavok", url: "https://www.kavokuy.com" }],
   creator: "Kavok",
 
   /* ── OpenGraph ── */
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: "Kavok — Venture Studio & Software Factory en Uruguay",
     description:
       "Mystudio (Pilates), Kavok Ecommerce (IA + Mercado Pago) y software a medida. Desde Montevideo para toda Latinoamérica.",
-    url: "https://kavokuy.com",
+    url: "https://www.kavokuy.com",
     siteName: "Kavok",
     /* La imagen la genera /app/opengraph-image.tsx automáticamente */
     locale: "es_UY",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
 
   /* ── Canonical ── */
   alternates: {
-    canonical: "https://kavokuy.com",
+    canonical: "https://www.kavokuy.com",
   },
 
   /* ── Robots ── */
@@ -86,18 +86,18 @@ const jsonLd = {
   "@graph": [
     {
       "@type": ["Organization", "ProfessionalService", "LocalBusiness"],
-      "@id": "https://kavokuy.com/#organization",
+      "@id": "https://www.kavokuy.com/#organization",
       name: "Kavok",
-      url: "https://kavokuy.com",
+      url: "https://www.kavokuy.com",
       logo: {
         "@type": "ImageObject",
-        "@id": "https://kavokuy.com/#logo",
-        url: "https://kavokuy.com/logo-kavok.svg",
-        contentUrl: "https://kavokuy.com/logo-kavok.svg",
+        "@id": "https://www.kavokuy.com/#logo",
+        url: "https://www.kavokuy.com/logo-kavok.svg",
+        contentUrl: "https://www.kavokuy.com/logo-kavok.svg",
       },
       image: {
         "@type": "ImageObject",
-        url: "https://kavokuy.com/opengraph-image",
+        url: "https://www.kavokuy.com/opengraph-image",
         width: 1200,
         height: 630,
       },
@@ -198,7 +198,7 @@ const jsonLd = {
               name: "Desarrollo de Software a Medida",
               description:
                 "Diseño y desarrollo de aplicaciones web complejas, sistemas de gestión logística, e-commerces con personalizadores en tiempo real y automatizaciones con IA.",
-              provider: { "@id": "https://kavokuy.com/#organization" },
+              provider: { "@id": "https://www.kavokuy.com/#organization" },
             },
           },
         ],
@@ -206,22 +206,22 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://kavokuy.com/#website",
-      url: "https://kavokuy.com",
+      "@id": "https://www.kavokuy.com/#website",
+      url: "https://www.kavokuy.com",
       name: "Kavok — Venture Studio & Software Factory",
       description: "Orquestamos tecnología para escalar tu negocio desde Montevideo, Uruguay.",
-      publisher: { "@id": "https://kavokuy.com/#organization" },
+      publisher: { "@id": "https://www.kavokuy.com/#organization" },
       inLanguage: "es-UY",
     },
     {
       "@type": "WebPage",
-      "@id": "https://kavokuy.com/#webpage",
-      url: "https://kavokuy.com",
+      "@id": "https://www.kavokuy.com/#webpage",
+      url: "https://www.kavokuy.com",
       name: "Kavok — Orquestamos Tecnología para Escalar tu Negocio en Uruguay",
       description:
         "Venture Studio & Software Factory en Montevideo. Software a medida, Mystudio (gestión de Pilates), Kavok Ecommerce (IA + Mercado Pago) y automatización con IA.",
-      isPartOf: { "@id": "https://kavokuy.com/#website" },
-      about: { "@id": "https://kavokuy.com/#organization" },
+      isPartOf: { "@id": "https://www.kavokuy.com/#website" },
+      about: { "@id": "https://www.kavokuy.com/#organization" },
       inLanguage: "es-UY",
       mentions: [
         { "@type": "Thing", name: "Mercado Pago" },
